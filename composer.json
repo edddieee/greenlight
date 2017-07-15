@@ -1,0 +1,18 @@
+{
+    "name": "eddiecode/greenlight",
+    "description": "Behaviour Driven Development testing framework for PHP",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Edgar Yonemura",
+            "email": "edgar.yonemura@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Greenlight\\": "src/"
+        }
+    },
+    "require": {}
+}
