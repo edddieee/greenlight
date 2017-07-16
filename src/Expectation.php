@@ -8,6 +8,7 @@ class Expectation
 {
     public $actualValue;
     public $message;
+    public $negate = false;
 
     public function __construct($actualValue, $message = '')
     {
@@ -15,16 +16,25 @@ class Expectation
         $this->customMessage = $message;
     }
 
-    public function assert($response, $message)
+    public function assert($response, $message, $negativeMessage)
     {
-        $message = ($this->customMessage ? "{$this->customMessage}: " : "") . $message;
+        $message = $this->buildMessage($message, $negativeMessage);
 
-        if (!$response) {
+        $response = $this->negate ? $response : !$response;
+
+        if ($response) {
             try {
                 throw new AssertionError($message);
             } catch(AssertionError $error) {
                 return $error->getMessage();
             }
         }
+    }
+
+    private function buildMessage($message, $negateMessage)
+    {
+        $customMessage = ($this->customMessage ? "{$this->customMessage} : " : "");
+
+        return $customMessage . ($this->negate ? $negateMessage : $message);
     }
 }
