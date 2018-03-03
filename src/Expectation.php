@@ -2,6 +2,8 @@
 
 namespace Greenlight;
 
+use Greenlight\Output\ErrorQueue;
+use Greenlight\Output\ErrorMessage;
 use AssertionError;
 
 class Expectation
@@ -26,7 +28,8 @@ class Expectation
             try {
                 throw new AssertionError($message);
             } catch(AssertionError $error) {
-                return $error->getMessage();
+                $outputMessage = ErrorQueue::getInstance();
+                $outputMessage->push(new ErrorMessage($error));
             }
         }
     }
